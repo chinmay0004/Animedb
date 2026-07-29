@@ -1,5 +1,6 @@
 //https://api.jikan.moe/v4/anime/20/full
 import validateData from "../validator/validateData.js";
+import transformData from "../transformations/dataTransformator.js";
 
 
 async function syncAnime() {
@@ -15,8 +16,14 @@ async function syncAnime() {
         return
     }
 
+    const transformedAnime = transformData(validationResult.data)
+
+
     console.log("validation successful")
-    console.log(validationResult.data)
+
+    console.log(transformedAnime)
+
+   
 }
 
 syncAnime()
