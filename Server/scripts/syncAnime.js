@@ -6,7 +6,7 @@ import insertAnime from "../repository/animeRepository.js";
 
 async function syncAnime() {
 
-    for(let page = 1; page <= 3; page++){
+    for(let page = 4; page <= 5; page++){
         console.log(`fetching page: ${page}`)
         const response = await fetch( `https://api.jikan.moe/v4/top/anime?page=${page}`)
 
