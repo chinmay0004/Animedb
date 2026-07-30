@@ -1,5 +1,5 @@
 
-import {findAnimeById, getAllAnimeFromDb, findAnimeAiring, findFinishedAnime, findAnimeByTitle} from "../repository/queryRepository.js";
+import {findAnimeById, getAllAnimeFromDb, findAnimeAiring, findFinishedAnime, findAnimeByTitle, paginations, LatestAiring} from "../repository/queryRepository.js";
 
 
 export async function getAllAnime(req, res) {
@@ -35,5 +35,23 @@ export async function SearchAnime(req, res) {
 
     res.json(anime);
 }
+
+export async function Paginations(req, res) {
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 20;
+
+    const offset = (page - 1) * limit;
+
+    const anime = await paginations(limit, offset)
+
+    res.json(anime);
+}
+
+export async function LatestAnime(req, res) {
+    const anime = await LatestAiring();
+
+    res.json(anime);
+};
+
 
 

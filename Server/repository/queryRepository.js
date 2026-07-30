@@ -1,4 +1,3 @@
-import { id } from "zod/v4/locales";
 import pool from "../db/animedb.js";
 
 export async function getAllAnimeFromDb() {
@@ -31,6 +30,20 @@ export async function findAnimeByTitle(query) {
     const result = await pool.query("SELECT * FROM anime WHERE title ILIKE $1",
         [`%${query}%`]
     );
+
+    return result.rows;
+}
+
+export async function paginations(limit, offset) {
+    const result = await pool.query("SELECT * FROM anime LIMIT $1 OFFSET $2",
+        [limit, offset]
+    );
+
+    return result.rows;
+}
+
+export async function LatestAiring() {
+    const result = await pool.query("SELECT * FROM anime ORDER BY aired_from DESC");
 
     return result.rows;
 }
