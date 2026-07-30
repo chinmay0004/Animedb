@@ -20,3 +20,17 @@ export async function findAnimeAiring() {
 
     return result.rows;
 }
+
+export async function findFinishedAnime() {
+    const result = await pool.query("SELECT * FROM anime WHERE status = 'Finished Airing'");
+
+    return result.rows;
+}
+
+export async function findAnimeByTitle(query) {
+    const result = await pool.query("SELECT * FROM anime WHERE title ILIKE $1",
+        [`%${query}%`]
+    );
+
+    return result.rows;
+}

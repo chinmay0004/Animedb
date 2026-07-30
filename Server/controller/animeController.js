@@ -1,4 +1,5 @@
-import {findAnimeById, getAllAnimeFromDb, findAnimeAiring} from "../repository/queryRepository.js";
+
+import {findAnimeById, getAllAnimeFromDb, findAnimeAiring, findFinishedAnime, findAnimeByTitle} from "../repository/queryRepository.js";
 
 
 export async function getAllAnime(req, res) {
@@ -20,4 +21,19 @@ export async function AiringAnime(req, res) {
 
     res.json(anime);
 };
+
+export async function FinishedAnimes(req, res) {
+    const anime = await findFinishedAnime();
+
+    res.json(anime);
+};
+
+export async function SearchAnime(req, res) {
+    const {q} = req.query;
+
+    const anime = await findAnimeByTitle(q);
+
+    res.json(anime);
+}
+
 
