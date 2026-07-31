@@ -17,11 +17,11 @@ export function Home() {
 
 
     return(
-        <div className="min-h-screen bg-[#F8F3E8] p-10">
+        <div className="min-h-screen bg-[#EEDFC4] py-16 px-8">
         <div className="mx-auto max-w-7xl">
             <h1 className="mb-10 text-5xl font-bold text-[#2C2C2C]">AnimeDB</h1>
 
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid justify-items-center gap-x-14 gap-y-16 sm:grid-cols-2 xl:grid-cols-3">
                 {anime.map(item =>(
                     <AnimeCard key={item.id} anime={item} />
                 ))}
