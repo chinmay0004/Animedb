@@ -1,3 +1,5 @@
+--UP MIGRATIONS:
+
 CREATE TABLE anime(
     id UUID PRIMARY KEY,
     external_id INTEGER UNIQUE NOT NULL,
@@ -63,3 +65,6 @@ CREATE TABLE users(
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );
+
+
+

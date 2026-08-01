@@ -39,8 +39,13 @@ export async function paginations(limit, offset) {
         [limit, offset]
     );
 
-    return result.rows;
-}
+    const total = await pool.query("SELECT COUNT(*) FROM anime");
+
+    return{
+        anime: result.rows,
+        total: Number(total.rows[0].count)
+    };
+};
 
 export async function LatestAiring() {
     const result = await pool.query("SELECT * FROM anime ORDER BY aired_from DESC");

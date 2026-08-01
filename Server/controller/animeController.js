@@ -42,9 +42,18 @@ export async function Paginations(req, res) {
 
     const offset = (page - 1) * limit;
 
-    const anime = await paginations(limit, offset)
+    const {anime, total} = await paginations(limit, offset)
+   
 
-    res.json(anime);
+    res.json({
+        data: anime,
+        pagination:{
+            page,
+            limit,
+            total,
+            totalPages: Math.ceil(total / limit),
+        },
+    });
 }
 
 export async function LatestAnime(req, res) {
