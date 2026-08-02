@@ -1,0 +1,181 @@
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { getAnimeById } from "../api/AnimeApi";
+
+export default function AnimeDetails() {
+    const { id } = useParams();
+
+    const [anime, setAnime] = useState(null);
+
+    useEffect(() => {
+        async function fetchAnime() {
+            const data = await getAnimeById(id);
+            setAnime(data[0]);
+        }
+
+        fetchAnime();
+    }, [id]);
+
+    if (!anime) {
+        return (
+            <div className="min-h-screen flex items-center justify-center text-3xl font-black">
+                Loading...
+            </div>
+        );
+    }
+
+    return (
+        <div className="min-h-screen bg-[#EEDFC4] py-12 px-6">
+
+            <div className="mx-auto max-w-6xl">
+
+                <Link
+                    to="/"
+                    className="inline-block mb-8 border-[3px] border-[#3B2F2A] bg-[#782F22] px-5 py-2 font-black uppercase tracking-wider text-[#F8F3EA] shadow-[4px_4px_0px_#3B2F2A]"
+                >
+                    ← Back To Archive
+                </Link>
+
+                <div className="border-y-[4px] border-[#3B2F2A] py-8 text-center">
+
+                    <h1 className="text-6xl font-black uppercase text-[#782F22]">
+                        {anime.title}
+                    </h1>
+
+                    <p className="mt-2 text-lg font-bold uppercase tracking-[5px]">
+                        Issue No. {anime.external_id}
+                    </p>
+
+                </div>
+
+                <div className="mt-10 grid lg:grid-cols-[340px_1fr] gap-10">
+
+                    <div className="border-[4px] border-[#3B2F2A] bg-[#D8C7A8] p-4 shadow-[8px_8px_0px_#3B2F2A]">
+
+                        <img
+                            src={anime.image_url}
+                            alt={anime.title}
+                            className="w-full object-contain"
+                        />
+
+                    </div>
+
+                    <div className="border-[4px] border-[#3B2F2A] bg-[#F4E9D8] p-8 shadow-[8px_8px_0px_#3B2F2A]">
+
+                        <div className="grid grid-cols-2 gap-8">
+
+                            <div>
+                                <p className="text-xs font-black uppercase tracking-[4px] text-[#782F22]">
+                                    Status
+                                </p>
+
+                                <p className="mt-2 text-xl font-bold">
+                                    {anime.status}
+                                </p>
+                            </div>
+
+                            <div>
+                                <p className="text-xs font-black uppercase tracking-[4px] text-[#782F22]">
+                                    Episodes
+                                </p>
+
+                                <p className="mt-2 text-xl font-bold">
+                                    {anime.episodes ?? "?"}
+                                </p>
+                            </div>
+
+                            <div>
+                                <p className="text-xs font-black uppercase tracking-[4px] text-[#782F22]">
+                                    Score
+                                </p>
+
+                                <p className="mt-2 text-xl font-bold">
+                                    {anime.score ?? "N/A"}
+                                </p>
+                            </div>
+
+                            <div>
+                                <p className="text-xs font-black uppercase tracking-[4px] text-[#782F22]">
+                                    Rating
+                                </p>
+
+                                <p className="mt-2 text-xl font-bold">
+                                    {anime.rating}
+                                </p>
+                            </div>
+
+                            <div>
+                                <p className="text-xs font-black uppercase tracking-[4px] text-[#782F22]">
+                                    Aired
+                                </p>
+
+                                <p className="mt-2 text-xl font-bold">
+                                    {anime.aired_from}
+                                </p>
+                            </div>
+
+                            <div>
+                                <p className="text-xs font-black uppercase tracking-[4px] text-[#782F22]">
+                                    Genres
+                                </p>
+
+                                <p className="mt-2 text-xl font-bold">
+                                    {anime.genres}
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <section className="mt-14">
+
+                    <div className="border-y-[4px] border-[#3B2F2A] py-4">
+
+                        <h2 className="text-3xl font-black uppercase tracking-[5px] text-[#782F22]">
+                            Editor's Notes
+                        </h2>
+
+                    </div>
+
+                    <div className="border-[4px] border-[#3B2F2A] bg-[#F4E9D8] p-8 shadow-[8px_8px_0px_#3B2F2A]">
+
+                        <p className="leading-8 text-lg">
+                            {anime.description}
+                        </p>
+
+                    </div>
+
+                </section>
+
+                <section className="mt-14">
+
+                    <div className="border-y-[4px] border-[#3B2F2A] py-4">
+
+                        <h2 className="text-3xl font-black uppercase tracking-[5px] text-[#782F22]">
+                            Main Cast
+                        </h2>
+
+                    </div>
+
+                    <div className="mt-8 border-[4px] border-dashed border-[#3B2F2A] bg-[#F4E9D8] p-8 text-center">
+
+                        <p className="text-xl font-bold">
+                            Coming Soon...
+                        </p>
+
+                        <p className="mt-2 text-[#555]">
+                            Characters will be added in the next update.
+                        </p>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+    );
+}

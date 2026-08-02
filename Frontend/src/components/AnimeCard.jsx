@@ -1,9 +1,11 @@
+import {Link} from 'react-router-dom';
 export default function AnimeCard({anime}){
 
 
     return(
+    <Link to={`/anime/${anime.id}`}>
     <article className="group w-[320px] bg-[#F4E9D8] border-[3px] border-[#3B2F2A] shadow-[8px_8px_0px_#3B2F2A] overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-[12px_12px_0px_#3B2F2A]">
-
+    
 
       <div className="flex justify-between items-center px-4 py-2 border-b-[3px] border-[#3B2F2A] bg-[#E8D7BD]">
 
@@ -78,14 +80,13 @@ export default function AnimeCard({anime}){
 
         </div>
 
-        <button className="uppercase border-[3px] border-[#3B2F2A] bg-[#782F22] text-[#F7F1E8] px-5 py-2 font-bold hover:bg-[#5D241A] transition">
-
+        <div className="uppercase border-[3px] border-[#3B2F2A] bg-[#782F22] text-[#F7F1E8] px-5 py-2 font-bold">
           View →
-
-        </button>
+      </div>
 
       </div>
 
     </article>
+    </Link>
     )
 }

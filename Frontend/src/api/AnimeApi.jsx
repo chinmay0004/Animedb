@@ -15,5 +15,15 @@ export async function  getPaginatedAnimes(page, limit) {
         console.log('fail to load pages')
     }
 
-    return response.json();
+    return await response.json();
+}
+
+export async function getAnimeById(id) {
+    const response = await fetch(`http://localhost:3000/api/anime/${id}`);
+
+    if(!response.ok){
+        console.log('fail to get id')
+    }
+
+    return await response.json();
 }

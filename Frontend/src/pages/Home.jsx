@@ -10,7 +10,7 @@ export function Home() {
 
     useEffect(()=>{
         async function fetchAnime() {
-             const response = await getPaginatedAnimes(page, 10)
+             const response = await getPaginatedAnimes(page, 15)
              
              setAnime(response.data)
              setPagination(response.pagination)
@@ -30,36 +30,38 @@ export function Home() {
                 ))}
             </div>
         </div>
-        <div>
-            {pagination?.totalPages &&
-                Array.from(
-                    { length: pagination.totalPages },
-                    (_, index) => (
-                        <button className="px-4
-                                    py-2
-                                    border-[3px]
-                                    border-[#3B2F2A]
-                                    bg-[#E8D7BD]
-                                    text-[#3B2F2A]
-                                    font-black
-                                    uppercase
-                                    shadow-[4px_4px_0px_#3B2F2A]
-                                    transition-all
-                                    duration-200
-                                    hover:-translate-y-1
-                                    hover:shadow-[6px_6px_0px_#3B2F2A]
-                                    active:translate-y-0
-                                    active:shadow-[2px_2px_0px_#3B2F2A]"
-                            key={index}
-                            onClick={() => setPage(index + 1)}
-                        >
-                            {index + 1}
-                        </button>
-                    )
-                )
-            }
-            
-        </div>
+        <div className="mt-16 flex items-center justify-center gap-4 border-y-[3px] border-[#3B2F2A] bg-[#E8D7BD] py-5">
+    <button
+        disabled={page === 1}
+        onClick={() => setPage(page - 1)}
+        className="border-[3px] border-[#3B2F2A] bg-[#782F22] px-5 py-2 font-black uppercase tracking-wider text-[#F7F1E8] shadow-[4px_4px_0px_#3B2F2A] transition hover:-translate-y-1 hover:shadow-[6px_6px_0px_#3B2F2A] disabled:cursor-not-allowed disabled:opacity-40"
+    >
+        ← Previous
+    </button>
+
+    {pagination?.totalPages &&
+        Array.from({ length: pagination.totalPages }, (_, index) => (
+            <button
+                key={index}
+                onClick={() => setPage(index + 1)}
+                className={`h-12 w-12 border-[3px] border-[#3B2F2A] font-black shadow-[4px_4px_0px_#3B2F2A] transition-all hover:-translate-y-1 hover:shadow-[6px_6px_0px_#3B2F2A] ${
+                    page === index + 1
+                        ? "bg-[#782F22] text-[#F8F3EA]"
+                        : "bg-[#E8D7BD] text-[#3B2F2A]"
+                }`}
+                    >
+                        {String(index + 1).padStart(2, "0")}
+                    </button>
+                ))}
+
+                <button
+                    disabled={page === pagination?.totalPages}
+                    onClick={() => setPage(page + 1)}
+                    className="border-[3px] border-[#3B2F2A] bg-[#782F22] px-5 py-2 font-black uppercase tracking-wider text-[#F7F1E8] shadow-[4px_4px_0px_#3B2F2A] transition hover:-translate-y-1 hover:shadow-[6px_6px_0px_#3B2F2A] disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                    Next →
+                </button>
+            </div>
         </div>
     )
 }
