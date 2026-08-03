@@ -58,3 +58,19 @@ export async function getAllAnime() {
 
     return result.rows;
 }
+
+export async function findCharacterById(animeId) {
+    const result = await pool.query(`
+        SELECT *
+         FROM characters
+         WHERE anime_id = $1
+         ORDER BY
+            CASE
+                WHEN role = 'Main' THEN 0
+                ELSE 1
+            END,
+            name`,
+        [animeId]
+        );
+        return result.rows;
+}
