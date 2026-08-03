@@ -52,3 +52,9 @@ export async function LatestAiring() {
 
     return result.rows;
 }
+
+export async function getAllAnime() {
+    const result = await pool.query('SELECT id, external_id, title FROM anime');
+
+    return result.rows;
+}
