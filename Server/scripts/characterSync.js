@@ -1,7 +1,7 @@
-import ValidateCharacters from "./validator/characterValidations.js";
-import characterTransform from "./transformations/characterTransformation.js";
-import insertCharacter from "./repository/characterRepository.js";
-import { getAllAnime } from "./repository/queryRepository.js";
+import ValidateCharacters from "../validator/characterValidations.js";
+import characterTransform from "../transformations/characterTransformation.js";
+import insertCharacter from "../repository/characterRepository.js";
+import { getAllAnime } from "../repository/queryRepository.js";
 
 
 
