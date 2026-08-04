@@ -54,6 +54,6 @@ for (const anime of animeList){
     
     console.log(`Characters synced: ${anime.title}`);
 
-    await new Promise(resolve => setTimeout(resolve, 4000))
+    await new Promise(resolve => setTimeout(resolve, 10000))
     
 }

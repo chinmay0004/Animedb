@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getAnimeById } from "../api/AnimeApi";
+import { getAnimeById, getCharacters } from "../api/AnimeApi";
+
 
 export default function AnimeDetails() {
     const { id } = useParams();
 
     const [anime, setAnime] = useState(null);
+    const[characters, setCharacters] = useState([])
+
+    useEffect(()=>{
+        async function fetchCharacters() {
+            const data = await getCharacters(id);
+            setCharacters(data)
+        }
+        fetchCharacters()
+    },[id])
 
     useEffect(() => {
         async function fetchAnime() {
@@ -152,25 +162,44 @@ export default function AnimeDetails() {
 
                 <section className="mt-14">
 
-                    <div className="border-y-[4px] border-[#3B2F2A] py-4">
+                    <div className="mt-12 border-t-[3px] border-[#3B2F2A] pt-8">
 
-                        <h2 className="text-3xl font-black uppercase tracking-[5px] text-[#782F22]">
-                            Main Cast
-                        </h2>
+                    <h2 className="uppercase text-3xl font-black tracking-[3px] text-[#782F22] mb-8">
+                        Main Cast
+                    </h2>
+
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+                        {characters.map((character) => (
+                            <div
+                                key={character.id}
+                                className="bg-[#F4E9D8] border-[3px] border-[#3B2F2A] shadow-[6px_6px_0px_#3B2F2A] overflow-hidden"
+                            >
+
+                                <img
+                                    src={character.image_url}
+                                    alt={character.name}
+                                    className="w-full h-56 object-cover border-b-[3px] border-[#3B2F2A]"
+                                />
+
+                                <div className="p-4">
+
+                                    <h3 className="font-black uppercase text-[#782F22] line-clamp-2">
+                                        {character.name}
+                                    </h3>
+
+                                    <span className="inline-block mt-3 border-[2px] border-[#3B2F2A] bg-[#E8D7BD] px-3 py-1 text-xs font-bold uppercase">
+                                        {character.role}
+                                    </span>
+
+                                </div>
+
+                            </div>
+                        ))}
 
                     </div>
 
-                    <div className="mt-8 border-[4px] border-dashed border-[#3B2F2A] bg-[#F4E9D8] p-8 text-center">
-
-                        <p className="text-xl font-bold">
-                            Coming Soon...
-                        </p>
-
-                        <p className="mt-2 text-[#555]">
-                            Characters will be added in the next update.
-                        </p>
-
-                    </div>
+                </div>
 
                 </section>
 
