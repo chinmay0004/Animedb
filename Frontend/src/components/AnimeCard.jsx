@@ -1,9 +1,9 @@
 import {Link} from 'react-router-dom';
-export default function AnimeCard({anime}){
+export default function AnimeCard({anime, page}){
 
 
     return(
-    <Link to={`/anime/${anime.id}`}>
+    <Link to={`/anime/${anime.id}?page=${page}`}>
     <article className="group w-[320px] bg-[#F4E9D8] border-[3px] border-[#3B2F2A] shadow-[8px_8px_0px_#3B2F2A] overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-[12px_12px_0px_#3B2F2A]">
     
 

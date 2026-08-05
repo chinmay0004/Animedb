@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
 import { getAnimeById, getCharacters } from "../api/AnimeApi";
 
 
@@ -8,6 +8,9 @@ export default function AnimeDetails() {
 
     const [anime, setAnime] = useState(null);
     const[characters, setCharacters] = useState([])
+    const[seachParams] = useSearchParams();
+
+    const page = seachParams.get("page") || 1
 
     useEffect(()=>{
         async function fetchCharacters() {
@@ -40,7 +43,7 @@ export default function AnimeDetails() {
             <div className="mx-auto max-w-6xl">
 
                 <Link
-                    to="/"
+                    to= {`/?page=${page}`}
                     className="inline-block mb-8 border-[3px] border-[#3B2F2A] bg-[#782F22] px-5 py-2 font-black uppercase tracking-wider text-[#F8F3EA] shadow-[4px_4px_0px_#3B2F2A]"
                 >
                     ← Back To Archive
@@ -169,34 +172,48 @@ export default function AnimeDetails() {
                     </h2>
 
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        {characters.length > 0 ? (
+                                characters.map((character) => (
+                                    <div
+                                        key={character.id}
+                                        className="bg-[#F4E9D8] border-[3px] border-[#3B2F2A] shadow-[6px_6px_0px_#3B2F2A] overflow-hidden"
+                                    >
 
-                        {characters.map((character) => (
-                            <div
-                                key={character.id}
-                                className="bg-[#F4E9D8] border-[3px] border-[#3B2F2A] shadow-[6px_6px_0px_#3B2F2A] overflow-hidden"
-                            >
+                                        <img
+                                            src={character.image_url}
+                                            alt={character.name}
+                                            className="w-full h-56 object-cover border-b-[3px] border-[#3B2F2A]"
+                                        />
 
-                                <img
-                                    src={character.image_url}
-                                    alt={character.name}
-                                    className="w-full h-56 object-cover border-b-[3px] border-[#3B2F2A]"
-                                />
+                                        <div className="p-4">
 
-                                <div className="p-4">
+                                            <h3 className="font-black uppercase text-[#782F22] line-clamp-2">
+                                                {character.name}
+                                            </h3>
 
-                                    <h3 className="font-black uppercase text-[#782F22] line-clamp-2">
-                                        {character.name}
+                                            <span className="inline-block mt-3 border-[2px] border-[#3B2F2A] bg-[#E8D7BD] px-3 py-1 text-xs font-bold uppercase">
+                                                {character.role}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="col-span-full border-[3px] border-dashed border-[#3B2F2A] bg-[#F4E9D8] p-10 text-center shadow-[6px_6px_0px_#3B2F2A]">
+
+                                    <h3 className="text-2xl font-black uppercase text-[#782F22]">
+                                        Character Archive In Progress
                                     </h3>
 
-                                    <span className="inline-block mt-3 border-[2px] border-[#3B2F2A] bg-[#E8D7BD] px-3 py-1 text-xs font-bold uppercase">
-                                        {character.role}
-                                    </span>
+                                    <p className="mt-3 text-lg">
+                                        We're still collecting character information for this anime.
+                                        Check back later as the archive continues to grow.
+                                    </p>
 
                                 </div>
-
-                            </div>
-                        ))}
-
+                            )}
+                                                    
                     </div>
 
                 </div>

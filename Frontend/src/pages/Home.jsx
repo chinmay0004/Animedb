@@ -2,11 +2,16 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { getAllAnime, getPaginatedAnimes } from "../api/AnimeApi";
 import AnimeCard from "../components/AnimeCard";
+import { useSearchParams } from "react-router-dom";
 
 export function Home() {
     const [anime, setAnime] = useState([]);
-    const [page, setPage] = useState(1);
+    
     const[pagination, setPagination] = useState(null);
+    const[searchParams, setSearchParams] = useSearchParams();
+
+    const page = Number(searchParams.get("page")) || 1;
+
 
     useEffect(()=>{
         async function fetchAnime() {
@@ -26,14 +31,14 @@ export function Home() {
 
             <div className="grid justify-items-center gap-x-14 gap-y-16 sm:grid-cols-2 xl:grid-cols-3">
                 {anime.map(item =>(
-                    <AnimeCard key={item.id} anime={item} />
+                    <AnimeCard key={item.id} anime={item} page={page}/>
                 ))}
             </div>
         </div>
         <div className="mt-16 flex items-center justify-center gap-4 border-y-[3px] border-[#3B2F2A] bg-[#E8D7BD] py-5">
     <button
         disabled={page === 1}
-        onClick={() => setPage(page - 1)}
+        onClick={() => setSearchParams({page: page - 1})}
         className="border-[3px] border-[#3B2F2A] bg-[#782F22] px-5 py-2 font-black uppercase tracking-wider text-[#F7F1E8] shadow-[4px_4px_0px_#3B2F2A] transition hover:-translate-y-1 hover:shadow-[6px_6px_0px_#3B2F2A] disabled:cursor-not-allowed disabled:opacity-40"
     >
         ← Previous
@@ -43,7 +48,7 @@ export function Home() {
         Array.from({ length: pagination.totalPages }, (_, index) => (
             <button
                 key={index}
-                onClick={() => setPage(index + 1)}
+                onClick={() => setSearchParams({page: index + 1})}
                 className={`h-12 w-12 border-[3px] border-[#3B2F2A] font-black shadow-[4px_4px_0px_#3B2F2A] transition-all hover:-translate-y-1 hover:shadow-[6px_6px_0px_#3B2F2A] ${
                     page === index + 1
                         ? "bg-[#782F22] text-[#F8F3EA]"
@@ -56,7 +61,7 @@ export function Home() {
 
                 <button
                     disabled={page === pagination?.totalPages}
-                    onClick={() => setPage(page + 1)}
+                    onClick={() => setSearchParams({page: page + 1})}
                     className="border-[3px] border-[#3B2F2A] bg-[#782F22] px-5 py-2 font-black uppercase tracking-wider text-[#F7F1E8] shadow-[4px_4px_0px_#3B2F2A] transition hover:-translate-y-1 hover:shadow-[6px_6px_0px_#3B2F2A] disabled:cursor-not-allowed disabled:opacity-40"
                 >
                     Next →
